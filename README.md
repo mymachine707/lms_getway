@@ -1,1 +1,1 @@
-# lms_getway
+# lms_gateway
