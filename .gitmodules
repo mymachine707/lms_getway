@@ -1,0 +1,3 @@
+[submodule "lms_proto"]
+	path = lms_proto
+	url = https://github.com/mymachine707/lms_proto.git
