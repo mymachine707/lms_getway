@@ -1,6 +1,7 @@
 package handlars
 
 import (
+	"fmt"
 	"lms/lms_getway/models"
 	"lms/lms_getway/protogen/book_service"
 	"net/http"
@@ -143,13 +144,14 @@ func (h *handler) GetAuthorList(c *gin.Context) {
 //	@Param			Authorization	header		string	false	"Authorization"
 //	@Success		201				{object}	models.JSONResult{data=models.Author}
 //	@Failure		400				{object}	models.JSONErrorResponse
-//	@Router			/v1/author/{id} [delete]
+//	@Router			/v1/author/{id} [DELETE]
 func (h *handler) DeleteAuthor(c *gin.Context) {
 	idStr := c.Param("id")
-
+	fmt.Println(idStr)
 	author, err := h.grpcClient.Author.DeleteAuthor(c.Request.Context(), &book_service.DeleteAuthorRequest{
 		Id: idStr,
 	})
+	fmt.Println(author)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.JSONErrorResponse{
 			Error: err.Error(),
@@ -174,13 +176,14 @@ func (h *handler) DeleteAuthor(c *gin.Context) {
 //	@Param			Authorization	header		string	false	"Authorization"
 //	@Success		201				{object}	models.JSONResult{data=models.Author}
 //	@Failure		400				{object}	models.JSONErrorResponse
-//	@Router			/v1/author/{id} [delete]
+//	@Router			/v1/author/{id} [PUT]
 func (h *handler) EnabledAuthor(c *gin.Context) {
 	idStr := c.Param("id")
-
+	fmt.Println(idStr)
 	author, err := h.grpcClient.Author.EnabledAuthor(c.Request.Context(), &book_service.EnabledAuthorRequest{
 		Id: idStr,
 	})
+	fmt.Println(author)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.JSONErrorResponse{
 			Error: err.Error(),

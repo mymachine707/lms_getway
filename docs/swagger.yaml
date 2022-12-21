@@ -283,7 +283,7 @@ paths:
     delete:
       consumes:
       - application/json
-      description: get element by id and enabled this author
+      description: get element by id and delete this author
       parameters:
       - description: Author id
         in: path
@@ -310,7 +310,7 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/models.JSONErrorResponse'
-      summary: Enabled Author
+      summary: Delete Author
       tags:
       - author
     get:
@@ -344,6 +344,39 @@ paths:
           schema:
             $ref: '#/definitions/models.JSONErrorResponse'
       summary: GetAuthorByID
+      tags:
+      - author
+    put:
+      consumes:
+      - application/json
+      description: get element by id and enabled this author
+      parameters:
+      - description: Author id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Author'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: Enabled Author
       tags:
       - author
   /v1/book:
@@ -487,7 +520,7 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/models.JSONErrorResponse'
-      summary: Enabled Book
+      summary: Delete Book
       tags:
       - book
     get:
@@ -521,6 +554,39 @@ paths:
           schema:
             $ref: '#/definitions/models.JSONErrorResponse'
       summary: GetBookByID
+      tags:
+      - book
+    put:
+      consumes:
+      - application/json
+      description: get element by id and delete this book
+      parameters:
+      - description: Book id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Book'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: Enabled Book
       tags:
       - book
   /v1/category:
@@ -664,7 +730,7 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/models.JSONErrorResponse'
-      summary: Enabled Category
+      summary: Delete Category
       tags:
       - category
     get:
@@ -698,6 +764,39 @@ paths:
           schema:
             $ref: '#/definitions/models.JSONErrorResponse'
       summary: GetCategoryByID
+      tags:
+      - category
+    put:
+      consumes:
+      - application/json
+      description: get element by id and delete this category
+      parameters:
+      - description: Category id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Category'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: Enabled Category
       tags:
       - category
   /v1/location:
@@ -841,7 +940,7 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/models.JSONErrorResponse'
-      summary: Enabled Location
+      summary: Delete Location
       tags:
       - location
     get:
@@ -875,6 +974,39 @@ paths:
           schema:
             $ref: '#/definitions/models.JSONErrorResponse'
       summary: GetLocationByID
+      tags:
+      - location
+    put:
+      consumes:
+      - application/json
+      description: get element by id and delete this location
+      parameters:
+      - description: Location id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Location'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: Enabled Location
       tags:
       - location
 swagger: "2.0"

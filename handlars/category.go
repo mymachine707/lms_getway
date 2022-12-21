@@ -214,7 +214,7 @@ func (h *handler) DeleteCategory(c *gin.Context) {
 //	@Param			Authorization	header		string	false	"Authorization"
 //	@Success		201				{object}	models.JSONResult{data=models.Category}
 //	@Failure		400				{object}	models.JSONErrorResponse
-//	@Router			/v1/category/{id} [delete]
+//	@Router			/v1/category/{id} [PUT]
 func (h *handler) EnabledCategory(c *gin.Context) {
 	idStr := c.Param("id")
 

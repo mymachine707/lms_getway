@@ -214,7 +214,7 @@ func (h *handler) DeleteLocation(c *gin.Context) {
 //	@Param			Authorization	header		string	false	"Authorization"
 //	@Success		201				{object}	models.JSONResult{data=models.Location}
 //	@Failure		400				{object}	models.JSONErrorResponse
-//	@Router			/v1/location/{id} [delete]
+//	@Router			/v1/location/{id} [PUT]
 func (h *handler) EnabledLocation(c *gin.Context) {
 	idStr := c.Param("id")
 

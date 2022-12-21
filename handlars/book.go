@@ -220,7 +220,7 @@ func (h *handler) DeleteBook(c *gin.Context) {
 //	@Param			Authorization	header		string	false	"Authorization"
 //	@Success		201				{object}	models.JSONResult{data=models.Book}
 //	@Failure		400				{object}	models.JSONErrorResponse
-//	@Router			/v1/book/{id} [delete]
+//	@Router			/v1/book/{id} [PUT]
 func (h *handler) EnabledBook(c *gin.Context) {
 	idStr := c.Param("id")
 
