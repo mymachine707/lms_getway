@@ -1,0 +1,880 @@
+definitions:
+  models.Author:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        type: string
+      name:
+        example: Mark Twains
+        type: string
+      status:
+        example: enabled
+        type: string
+      updated_at:
+        type: string
+    required:
+    - name
+    - status
+    type: object
+  models.Book:
+    properties:
+      ISBN:
+        example: "4564231"
+        type: string
+      authorID:
+        example: uuid
+        type: string
+      categoryID:
+        example: uuid
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        type: string
+      locationID:
+        example: uuid
+        type: string
+      name:
+        example: War and Peace
+        type: string
+      quantity:
+        example: "10"
+        type: string
+      status:
+        example: enabled
+        type: string
+      updated_at:
+        type: string
+    required:
+    - ISBN
+    - authorID
+    - categoryID
+    - locationID
+    - name
+    - quantity
+    - status
+    type: object
+  models.Category:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        type: string
+      status:
+        example: enabled
+        type: string
+      title:
+        example: Novel
+        type: string
+      updated_at:
+        type: string
+    required:
+    - status
+    - title
+    type: object
+  models.CreateAuthorModul:
+    properties:
+      name:
+        example: Mark Twains
+        type: string
+    required:
+    - name
+    type: object
+  models.CreateBookModul:
+    properties:
+      ISBN:
+        example: 4564231
+        type: integer
+      authorID:
+        example: uuid
+        type: string
+      categoryID:
+        example: uuid
+        type: string
+      locationID:
+        example: uuid
+        type: string
+      name:
+        example: War and Peace
+        type: string
+      quantity:
+        example: 10
+        type: integer
+    required:
+    - ISBN
+    - authorID
+    - categoryID
+    - locationID
+    - name
+    - quantity
+    type: object
+  models.CreateCategoryModul:
+    properties:
+      title:
+        example: Novel
+        type: string
+    required:
+    - title
+    type: object
+  models.CreateLocationModul:
+    properties:
+      name:
+        example: A1
+        type: string
+    required:
+    - name
+    type: object
+  models.JSONErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  models.JSONResult:
+    properties:
+      data: {}
+      message:
+        type: string
+    type: object
+  models.Location:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        type: string
+      name:
+        example: A1
+        type: string
+      status:
+        example: enabled
+        type: string
+      updated_at:
+        type: string
+    required:
+    - name
+    - status
+    type: object
+  models.UpdateBookModul:
+    properties:
+      id:
+        type: string
+      locationID:
+        example: uuid
+        type: string
+      name:
+        example: War and Peace
+        type: string
+      quantity:
+        example: 10
+        type: integer
+    required:
+    - locationID
+    - name
+    - quantity
+    type: object
+  models.UpdateCategoryModul:
+    properties:
+      id:
+        type: string
+      title:
+        example: Novel
+        type: string
+    required:
+    - id
+    - title
+    type: object
+  models.UpdateLocationModul:
+    properties:
+      id:
+        type: string
+      name:
+        example: A1
+        type: string
+    required:
+    - id
+    - name
+    type: object
+info:
+  contact: {}
+paths:
+  /v1/author:
+    post:
+      consumes:
+      - application/json
+      description: Creat a new author
+      parameters:
+      - description: Author body
+        in: body
+        name: author
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateAuthorModul'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Author'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: Creat Author
+      tags:
+      - author
+  /v1/author/:
+    get:
+      consumes:
+      - application/json
+      description: GetAuthorList
+      parameters:
+      - description: "0"
+        in: query
+        name: offset
+        type: integer
+      - description: "100"
+        in: query
+        name: limit
+        type: integer
+      - description: search exapmle
+        in: query
+        name: search
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Author'
+                  type: array
+              type: object
+      summary: List authors
+      tags:
+      - author
+  /v1/author/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: get element by id and enabled this author
+      parameters:
+      - description: Author id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Author'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: Enabled Author
+      tags:
+      - author
+    get:
+      consumes:
+      - application/json
+      description: get an author by id
+      parameters:
+      - description: Author id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Author'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: GetAuthorByID
+      tags:
+      - author
+  /v1/book:
+    post:
+      consumes:
+      - application/json
+      description: Creat a new book
+      parameters:
+      - description: Book body
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateBookModul'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Book'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: Creat Book
+      tags:
+      - book
+  /v1/book/:
+    get:
+      consumes:
+      - application/json
+      description: GetBookList
+      parameters:
+      - description: "0"
+        in: query
+        name: offset
+        type: integer
+      - description: "100"
+        in: query
+        name: limit
+        type: integer
+      - description: search exapmle
+        in: query
+        name: search
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Book'
+                  type: array
+              type: object
+      summary: List books
+      tags:
+      - book
+    put:
+      consumes:
+      - application/json
+      description: Update Book
+      parameters:
+      - description: Book body
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateBookModul'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Book'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: Update Book
+      tags:
+      - book
+  /v1/book/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: get element by id and delete this book
+      parameters:
+      - description: Book id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Book'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: Enabled Book
+      tags:
+      - book
+    get:
+      consumes:
+      - application/json
+      description: get an book by id
+      parameters:
+      - description: Book id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Book'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: GetBookByID
+      tags:
+      - book
+  /v1/category:
+    post:
+      consumes:
+      - application/json
+      description: Creat a new category
+      parameters:
+      - description: Category body
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateCategoryModul'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Category'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: Creat Category
+      tags:
+      - category
+  /v1/category/:
+    get:
+      consumes:
+      - application/json
+      description: GetCategoryList
+      parameters:
+      - description: "0"
+        in: query
+        name: offset
+        type: integer
+      - description: "100"
+        in: query
+        name: limit
+        type: integer
+      - description: search exapmle
+        in: query
+        name: search
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Category'
+                  type: array
+              type: object
+      summary: List categorys
+      tags:
+      - category
+    put:
+      consumes:
+      - application/json
+      description: Update Category
+      parameters:
+      - description: Category body
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateCategoryModul'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Category'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: Update Category
+      tags:
+      - category
+  /v1/category/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: get element by id and delete this category
+      parameters:
+      - description: Category id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Category'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: Enabled Category
+      tags:
+      - category
+    get:
+      consumes:
+      - application/json
+      description: get an category by id
+      parameters:
+      - description: Category id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Category'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: GetCategoryByID
+      tags:
+      - category
+  /v1/location:
+    post:
+      consumes:
+      - application/json
+      description: Creat a new location
+      parameters:
+      - description: Location body
+        in: body
+        name: location
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateLocationModul'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Location'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: Creat Location
+      tags:
+      - location
+  /v1/location/:
+    get:
+      consumes:
+      - application/json
+      description: GetLocationList
+      parameters:
+      - description: "0"
+        in: query
+        name: offset
+        type: integer
+      - description: "100"
+        in: query
+        name: limit
+        type: integer
+      - description: search exapmle
+        in: query
+        name: search
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Location'
+                  type: array
+              type: object
+      summary: List locations
+      tags:
+      - location
+    put:
+      consumes:
+      - application/json
+      description: Update Location
+      parameters:
+      - description: Location body
+        in: body
+        name: location
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateLocationModul'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Location'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: Update Location
+      tags:
+      - location
+  /v1/location/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: get element by id and delete this location
+      parameters:
+      - description: Location id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Location'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: Enabled Location
+      tags:
+      - location
+    get:
+      consumes:
+      - application/json
+      description: get an location by id
+      parameters:
+      - description: Location id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Location'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: GetLocationByID
+      tags:
+      - location
+swagger: "2.0"
