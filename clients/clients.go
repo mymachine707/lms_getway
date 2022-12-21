@@ -1,20 +1,20 @@
 package clients
 
 import (
-	"mymachine707/config"
-	"mymachine707/protogen/eCommerce"
+	"lms/lms_getway/config"
+	"lms/lms_getway/protogen/book_service"
 
 	"google.golang.org/grpc"
 )
 
 type GrpcClients struct {
-	Category eCommerce.CategoryServiceClient
+	Author book_service.AuthorServiceClient
 
-	Product eCommerce.ProductServiceClient
+	Book book_service.BookServiceClient
 
-	Order eCommerce.OrderServiceClient
+	Category book_service.CategoryServiceClient
 
-	Client eCommerce.ClientServiceClient
+	Location book_service.LocationServiceClient
 
 	conns []*grpc.ClientConn
 }
@@ -25,36 +25,36 @@ func NewGrpcClients(cfg config.Config) (*GrpcClients, error) {
 		return nil, err
 	}
 
-	category := eCommerce.NewCategoryServiceClient(connCategory)
+	category := book_service.NewCategoryServiceClient(connCategory)
 
-	connProduct, err := grpc.Dial(cfg.ProductServiceGrpcHost+cfg.ProductServiceGrpcPort, grpc.WithInsecure())
+	connLocation, err := grpc.Dial(cfg.LocationServiceGrpcHost+cfg.LocationServiceGrpcPort, grpc.WithInsecure())
 	if err != nil {
 		return nil, err
 	}
 
-	product := eCommerce.NewProductServiceClient(connProduct)
+	location := book_service.NewLocationServiceClient(connLocation)
 
-	connOrder, err := grpc.Dial(cfg.OrderServiceGrpcHost+cfg.OrderServiceGrpcPort, grpc.WithInsecure())
+	connAuthor, err := grpc.Dial(cfg.AuthorServiceGrpcHost+cfg.AuthorServiceGrpcPort, grpc.WithInsecure())
 	if err != nil {
 		return nil, err
 	}
 
-	order := eCommerce.NewOrderServiceClient(connOrder)
+	author := book_service.NewAuthorServiceClient(connAuthor)
 
-	connClient, err := grpc.Dial(cfg.ClientServiceGrpcHost+cfg.ClientServiceGrpcPort, grpc.WithInsecure())
+	connBook, err := grpc.Dial(cfg.BookServiceGrpcHost+cfg.BookServiceGrpcPort, grpc.WithInsecure())
 	if err != nil {
 		return nil, err
 	}
 
-	client := eCommerce.NewClientServiceClient(connClient)
+	book := book_service.NewBookServiceClient(connBook)
 
 	conns := make([]*grpc.ClientConn, 0)
 	return &GrpcClients{
 		Category: category,
-		Product:  product,
-		Order:    order,
-		Client:   client,
-		conns:    append(conns, connCategory, connProduct, connOrder, connClient),
+		Location: location,
+		Author:   author,
+		Book:     book,
+		conns:    append(conns, connCategory),
 	}, nil
 }
 

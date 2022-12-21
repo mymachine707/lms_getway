@@ -1,8 +1,8 @@
 package handlars
 
 import (
-	"mymachine707/clients"
-	"mymachine707/config"
+	"lms/lms_getway/clients"
+	"lms/lms_getway/config"
 )
 
 // Handler ...

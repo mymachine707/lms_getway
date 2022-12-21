@@ -21,17 +21,14 @@ type Config struct {
 	CategoryServiceGrpcHost string
 	CategoryServiceGrpcPort string
 
-	ProductServiceGrpcHost string
-	ProductServiceGrpcPort string
+	LocationServiceGrpcHost string
+	LocationServiceGrpcPort string
 
-	OrderServiceGrpcHost string
-	OrderServiceGrpcPort string
+	BookServiceGrpcHost string
+	BookServiceGrpcPort string
 
-	OrderItemServiceGrpcHost string
-	OrderItemServiceGrpcPort string
-
-	ClientServiceGrpcHost string
-	ClientServiceGrpcPort string
+	AuthorServiceGrpcHost string
+	AuthorServiceGrpcPort string
 }
 
 // Load ...
@@ -42,7 +39,7 @@ func Load() Config {
 
 	config := Config{}
 
-	config.App = cast.ToString(getOrReturnDefaultValue("APP", "article"))
+	config.App = cast.ToString(getOrReturnDefaultValue("APP", "libary_management_service"))
 	config.AppVersion = cast.ToString(getOrReturnDefaultValue("APP_VERSION", "1.0.0"))
 	config.Environment = cast.ToString(getOrReturnDefaultValue("ENVIRONMENT", "development"))
 	config.HTTPPort = cast.ToString(getOrReturnDefaultValue("HTTP_PORT", ":7070"))
@@ -51,19 +48,16 @@ func Load() Config {
 	config.Default_Limit = cast.ToString(getOrReturnDefaultValue("DEFAULT_LIMIT", "10"))
 
 	config.CategoryServiceGrpcHost = cast.ToString(getOrReturnDefaultValue("CATEGORY_SERVICE_HOST", "localhost"))
-	config.CategoryServiceGrpcPort = cast.ToString(getOrReturnDefaultValue("CATEGORY_SERVICE_PORT", ":9000"))
+	config.CategoryServiceGrpcPort = cast.ToString(getOrReturnDefaultValue("CATEGORY_SERVICE_PORT", ":7000"))
 
-	config.ProductServiceGrpcHost = cast.ToString(getOrReturnDefaultValue("PRODUCT_SERVICE_HOST", "localhost"))
-	config.ProductServiceGrpcPort = cast.ToString(getOrReturnDefaultValue("PRODUCT_SERVICE_PORT", ":9000"))
+	config.LocationServiceGrpcHost = cast.ToString(getOrReturnDefaultValue("LOCATION_SERVICE_HOST", "localhost"))
+	config.LocationServiceGrpcPort = cast.ToString(getOrReturnDefaultValue("LOCATION_SERVICE_PORT", ":7000"))
 
-	config.OrderServiceGrpcHost = cast.ToString(getOrReturnDefaultValue("ORDER_SERVICE_HOST", "localhost"))
-	config.OrderServiceGrpcPort = cast.ToString(getOrReturnDefaultValue("ORDER_SERVICE_PORT", ":9001"))
+	config.BookServiceGrpcHost = cast.ToString(getOrReturnDefaultValue("BOOK_SERVICE_HOST", "localhost"))
+	config.BookServiceGrpcPort = cast.ToString(getOrReturnDefaultValue("BOOK_SERVICE_PORT", ":7000"))
 
-	config.OrderItemServiceGrpcHost = cast.ToString(getOrReturnDefaultValue("ORDERITEM_SERVICE_HOST", "localhost"))
-	config.OrderItemServiceGrpcPort = cast.ToString(getOrReturnDefaultValue("ORDERITEM_SERVICE_PORT", ":9001"))
-
-	config.ClientServiceGrpcHost = cast.ToString(getOrReturnDefaultValue("CLIENT_SERVICE_HOST", "localhost"))
-	config.ClientServiceGrpcHost = cast.ToString(getOrReturnDefaultValue("CLIENT_SERVICE_PORT", ":9002"))
+	config.AuthorServiceGrpcHost = cast.ToString(getOrReturnDefaultValue("AUTHOR_SERVICE_HOST", "localhost"))
+	config.AuthorServiceGrpcPort = cast.ToString(getOrReturnDefaultValue("AUTHOR_SERVICE_PORT", ":7000"))
 
 	return config
 }

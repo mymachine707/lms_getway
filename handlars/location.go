@@ -9,27 +9,27 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// CreatCategory godoc
+// CreatLocation godoc
 //
-//	@Summary		Creat Category
-//	@Description	Creat a new category
-//	@Tags			category
+//	@Summary		Creat Location
+//	@Description	Creat a new location
+//	@Tags			location
 //	@Accept			json
 //	@Produce		json
-//	@Param			category		body		models.CreateCategoryModul	true	"Category body"
+//	@Param			location		body		models.CreateLocationModul	true	"Location body"
 //	@Param			Authorization	header		string						false	"Authorization"
-//	@Success		201				{object}	models.JSONResult{data=models.Category}
+//	@Success		201				{object}	models.JSONResult{data=models.Location}
 //	@Failure		400				{object}	models.JSONErrorResponse
-//	@Router			/v1/category [post]
-func (h *handler) CreatCategory(c *gin.Context) {
-	var body models.CreateCategoryModul
+//	@Router			/v1/location [post]
+func (h *handler) CreatLocation(c *gin.Context) {
+	var body models.CreateLocationModul
 	if err := c.ShouldBindJSON(&body); err != nil {
 		c.JSON(http.StatusBadRequest, models.JSONErrorResponse{Error: err.Error()})
 		return
 	}
 
-	category, err := h.grpcClient.Category.CreateCategory(c.Request.Context(), &book_service.CreateCategoryRequest{
-		Title: body.Title,
+	location, err := h.grpcClient.Location.CreateLocation(c.Request.Context(), &book_service.CreateLocationRequest{
+		Name: body.Name,
 	})
 
 	if err != nil {
@@ -40,28 +40,28 @@ func (h *handler) CreatCategory(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, models.JSONResult{
-		Message: "CreatCategory",
-		Data:    category,
+		Message: "CreatLocation",
+		Data:    location,
 	})
 }
 
-// GetCategoryByID godoc
+// GetLocationByID godoc
 //
-//	@Summary		GetCategoryByID
-//	@Description	get an category by id
-//	@Tags			category
+//	@Summary		GetLocationByID
+//	@Description	get an location by id
+//	@Tags			location
 //	@Accept			json
 //	@Produce		json
-//	@Param			id				path		string	true	"Category id"
+//	@Param			id				path		string	true	"Location id"
 //	@Param			Authorization	header		string	false	"Authorization"
-//	@Success		201				{object}	models.JSONResult{data=models.Category}
+//	@Success		201				{object}	models.JSONResult{data=models.Location}
 //	@Failure		400				{object}	models.JSONErrorResponse
-//	@Router			/v1/category/{id} [get]
-func (h *handler) GetCategoryByID(c *gin.Context) {
+//	@Router			/v1/location/{id} [get]
+func (h *handler) GetLocationByID(c *gin.Context) {
 
 	idStr := c.Param("id")
 
-	category, err := h.grpcClient.Category.GetCategoryById(c.Request.Context(), &book_service.GetCategoryByIdRequest{
+	location, err := h.grpcClient.Location.GetLocationById(c.Request.Context(), &book_service.GetLocationByIdRequest{
 		Id: idStr,
 	})
 
@@ -74,24 +74,24 @@ func (h *handler) GetCategoryByID(c *gin.Context) {
 
 	c.JSON(http.StatusOK, models.JSONResult{
 		Message: "OK",
-		Data:    category,
+		Data:    location,
 	})
 }
 
-// GetCategoryList godoc
+// GetLocationList godoc
 //
-//	@Summary		List categorys
-//	@Description	GetCategoryList
-//	@Tags			category
+//	@Summary		List locations
+//	@Description	GetLocationList
+//	@Tags			location
 //	@Accept			json
 //	@Produce		json
 //	@Param			offset			query		int		false	"0"
 //	@Param			limit			query		int		false	"100"
 //	@Param			search			query		string	false	"search exapmle"
 //	@Param			Authorization	header		string	false	"Authorization"
-//	@Success		200				{object}	models.JSONResult{data=[]models.Category}
-//	@Router			/v1/category/ [get]
-func (h *handler) GetCategoryList(c *gin.Context) {
+//	@Success		200				{object}	models.JSONResult{data=[]models.Location}
+//	@Router			/v1/location/ [get]
+func (h *handler) GetLocationList(c *gin.Context) {
 
 	offsetStr := c.DefaultQuery("offset", h.cfg.Default_Offset)
 	limitStr := c.DefaultQuery("limit", h.cfg.Default_Limit)
@@ -113,7 +113,7 @@ func (h *handler) GetCategoryList(c *gin.Context) {
 		return
 	}
 
-	categoryList, err := h.grpcClient.Category.GetCategoryList(c.Request.Context(), &book_service.GetCategoryListRequest{
+	locationList, err := h.grpcClient.Location.GetLocationList(c.Request.Context(), &book_service.GetLocationListRequest{
 		Offset: int32(offset),
 		Limit:  int32(limit),
 		Search: searchStr,
@@ -127,35 +127,35 @@ func (h *handler) GetCategoryList(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, models.JSONResult{
-		Message: "GetCategoryList OK",
-		Data:    categoryList,
+		Message: "GetLocationList OK",
+		Data:    locationList,
 	})
 }
 
-// CategoryUpdate godoc
+// LocationUpdate godoc
 //
-//	@Summary		Update Category
-//	@Description	Update Category
-//	@Tags			category
+//	@Summary		Update Location
+//	@Description	Update Location
+//	@Tags			location
 //	@Accept			json
 //	@Produce		json
-//	@Param			category		body		models.UpdateCategoryModul	true	"Category body"
+//	@Param			location		body		models.UpdateLocationModul	true	"Location body"
 //	@Param			Authorization	header		string						false	"Authorization"
-//	@Success		201				{object}	models.JSONResult{data=[]models.Category}
+//	@Success		201				{object}	models.JSONResult{data=[]models.Location}
 //	@Failure		400				{object}	models.JSONErrorResponse
-//	@Router			/v1/category/ [put]
-func (h *handler) CategoryUpdate(c *gin.Context) {
+//	@Router			/v1/location/ [put]
+func (h *handler) LocationUpdate(c *gin.Context) {
 
-	var body models.UpdateCategoryModul
+	var body models.UpdateLocationModul
 
 	if err := c.ShouldBindJSON(&body); err != nil {
 		c.JSON(http.StatusBadRequest, models.JSONErrorResponse{Error: err.Error()})
 		return
 	}
 
-	category, err := h.grpcClient.Category.UpdateCategory(c.Request.Context(), &book_service.UpdateCategoryRequest{
-		Id:    body.ID,
-		Title: body.Title,
+	location, err := h.grpcClient.Location.UpdateLocation(c.Request.Context(), &book_service.UpdateLocationRequest{
+		Id:   body.ID,
+		Name: body.Name,
 	})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.JSONErrorResponse{
@@ -165,28 +165,28 @@ func (h *handler) CategoryUpdate(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Category Updated",
-		"data":    category,
+		"message": "Location Updated",
+		"data":    location,
 	})
 
 }
 
-// DeleteCategory godoc
+// DeleteLocation godoc
 //
-//	@Summary		Delete Category
-//	@Description	get element by id and delete this category
-//	@Tags			category
+//	@Summary		Delete Location
+//	@Description	get element by id and delete this location
+//	@Tags			location
 //	@Accept			json
 //	@Produce		json
-//	@Param			id				path		string	true	"Category id"
+//	@Param			id				path		string	true	"Location id"
 //	@Param			Authorization	header		string	false	"Authorization"
-//	@Success		201				{object}	models.JSONResult{data=models.Category}
+//	@Success		201				{object}	models.JSONResult{data=models.Location}
 //	@Failure		400				{object}	models.JSONErrorResponse
-//	@Router			/v1/category/{id} [delete]
-func (h *handler) DeleteCategory(c *gin.Context) {
+//	@Router			/v1/location/{id} [delete]
+func (h *handler) DeleteLocation(c *gin.Context) {
 	idStr := c.Param("id")
 
-	category, err := h.grpcClient.Category.DeleteCategory(c.Request.Context(), &book_service.DeleteCategoryRequest{
+	location, err := h.grpcClient.Location.DeleteLocation(c.Request.Context(), &book_service.DeleteLocationRequest{
 		Id: idStr,
 	})
 	if err != nil {
@@ -197,28 +197,28 @@ func (h *handler) DeleteCategory(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Category Deleted",
-		"data":    category,
+		"message": "Location Deleted",
+		"data":    location,
 	})
 
 }
 
-// EnabledCategory godoc
+// EnabledLocation godoc
 //
-//	@Summary		Enabled Category
-//	@Description	get element by id and delete this category
-//	@Tags			category
+//	@Summary		Enabled Location
+//	@Description	get element by id and delete this location
+//	@Tags			location
 //	@Accept			json
 //	@Produce		json
-//	@Param			id				path		string	true	"Category id"
+//	@Param			id				path		string	true	"Location id"
 //	@Param			Authorization	header		string	false	"Authorization"
-//	@Success		201				{object}	models.JSONResult{data=models.Category}
+//	@Success		201				{object}	models.JSONResult{data=models.Location}
 //	@Failure		400				{object}	models.JSONErrorResponse
-//	@Router			/v1/category/{id} [delete]
-func (h *handler) EnabledCategory(c *gin.Context) {
+//	@Router			/v1/location/{id} [delete]
+func (h *handler) EnabledLocation(c *gin.Context) {
 	idStr := c.Param("id")
 
-	category, err := h.grpcClient.Category.EnabledCategory(c.Request.Context(), &book_service.EnabledCategoryRequest{
+	location, err := h.grpcClient.Location.EnabledLocation(c.Request.Context(), &book_service.EnabledLocationRequest{
 		Id: idStr,
 	})
 	if err != nil {
@@ -229,8 +229,8 @@ func (h *handler) EnabledCategory(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Category Enabled",
-		"data":    category,
+		"message": "Location Enabled",
+		"data":    location,
 	})
 
 }
