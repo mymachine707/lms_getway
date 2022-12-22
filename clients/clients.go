@@ -3,6 +3,7 @@ package clients
 import (
 	"lms/lms_getway/config"
 	"lms/lms_getway/protogen/book_service"
+	"lms/lms_getway/protogen/rental_service"
 
 	"google.golang.org/grpc"
 )
@@ -15,6 +16,8 @@ type GrpcClients struct {
 	Category book_service.CategoryServiceClient
 
 	Location book_service.LocationServiceClient
+
+	Rental rental_service.RentalServiceClient
 
 	conns []*grpc.ClientConn
 }
@@ -48,12 +51,20 @@ func NewGrpcClients(cfg config.Config) (*GrpcClients, error) {
 
 	book := book_service.NewBookServiceClient(connBook)
 
+	connRental, err := grpc.Dial(cfg.RentalServiceGrpcHost+cfg.RentalServiceGrpcPort, grpc.WithInsecure())
+	if err != nil {
+		return nil, err
+	}
+
+	rental := rental_service.NewRentalServiceClient(connRental)
+
 	conns := make([]*grpc.ClientConn, 0)
 	return &GrpcClients{
 		Category: category,
 		Location: location,
 		Author:   author,
 		Book:     book,
+		Rental:   rental,
 		conns:    append(conns, connCategory),
 	}, nil
 }

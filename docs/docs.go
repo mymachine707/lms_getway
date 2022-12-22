@@ -1336,6 +1336,292 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/v1/rental": {
+            "post": {
+                "description": "Creat a new rental",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "rental"
+                ],
+                "summary": "Creat Rental",
+                "parameters": [
+                    {
+                        "description": "Rental body",
+                        "name": "rental",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.CreateRentalModul"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/models.JSONResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.Author"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.JSONErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/rental/": {
+            "get": {
+                "description": "GetRentalList",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "rental"
+                ],
+                "summary": "List rentals",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "0",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "100",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "search exapmle",
+                        "name": "search",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/models.JSONResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/models.Rental"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/rental/{id}": {
+            "get": {
+                "description": "get an rental by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "rental"
+                ],
+                "summary": "GetRentalByID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Rental id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/models.JSONResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.Rental"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.JSONErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "get element by id and enabled this rental",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "rental"
+                ],
+                "summary": "Update Rental",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Rental id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/models.JSONResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.Rental"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.JSONErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "get element by id and delete this rental",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "rental"
+                ],
+                "summary": "Delete Rental",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Rental id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/models.JSONResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.Rental"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.JSONErrorResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -1524,6 +1810,29 @@ const docTemplate = `{
                 }
             }
         },
+        "models.CreateRentalModul": {
+            "type": "object",
+            "required": [
+                "book_id",
+                "book_name",
+                "expected_return_date",
+                "user_id"
+            ],
+            "properties": {
+                "book_id": {
+                    "type": "string"
+                },
+                "book_name": {
+                    "type": "string"
+                },
+                "expected_return_date": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
         "models.JSONErrorResponse": {
             "type": "object",
             "properties": {
@@ -1566,6 +1875,48 @@ const docTemplate = `{
                     "example": "enabled"
                 },
                 "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Rental": {
+            "type": "object",
+            "required": [
+                "book_fines",
+                "book_id",
+                "book_name",
+                "expected_return_date",
+                "rental_date_time",
+                "rental_status",
+                "return_date",
+                "user_id"
+            ],
+            "properties": {
+                "book_fines": {
+                    "type": "string"
+                },
+                "book_id": {
+                    "type": "string"
+                },
+                "book_name": {
+                    "type": "string"
+                },
+                "expected_return_date": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "rental_date_time": {
+                    "type": "string"
+                },
+                "rental_status": {
+                    "type": "string"
+                },
+                "return_date": {
+                    "type": "string"
+                },
+                "user_id": {
                     "type": "string"
                 }
             }

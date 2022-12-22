@@ -29,6 +29,9 @@ type Config struct {
 
 	AuthorServiceGrpcHost string
 	AuthorServiceGrpcPort string
+
+	RentalServiceGrpcHost string
+	RentalServiceGrpcPort string
 }
 
 // Load ...
@@ -58,6 +61,9 @@ func Load() Config {
 
 	config.AuthorServiceGrpcHost = cast.ToString(getOrReturnDefaultValue("AUTHOR_SERVICE_HOST", "localhost"))
 	config.AuthorServiceGrpcPort = cast.ToString(getOrReturnDefaultValue("AUTHOR_SERVICE_PORT", ":7000"))
+
+	config.RentalServiceGrpcHost = cast.ToString(getOrReturnDefaultValue("RENTAL_SERVICE_HOST", "localhost"))
+	config.RentalServiceGrpcPort = cast.ToString(getOrReturnDefaultValue("RENTAL_SERVICE_PORT", ":5000"))
 
 	return config
 }

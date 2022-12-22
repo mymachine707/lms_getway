@@ -80,6 +80,12 @@ func main() {
 		v1.PUT("/book", h.BookUpdate)
 		v1.DELETE("/book/:id", h.DeleteBook)
 		v1.PUT("/book/:id", h.EnabledBook)
+
+		v1.POST("/rental", h.CreatRental)
+		v1.GET("/rental/:id", h.GetRentalByID)
+		v1.GET("/rental", h.GetRentalList)
+		v1.PUT("/rental", h.UpdateRental)
+		v1.DELETE("/rental/:id", h.DeleteRental)
 	}
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
